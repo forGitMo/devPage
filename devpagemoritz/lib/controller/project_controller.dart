@@ -9,7 +9,7 @@ class ProjectController {
     final doc =
         await FirebaseFirestore.instance.collection('projects').doc(id).get();
     if (doc.data() != null) {
-      return _stringToMarkdown(doc.data()!['data'] as String);
+      return _stringToMarkdown(doc.data()!['imgUrl'] as String);
     }
     return '';
   }
