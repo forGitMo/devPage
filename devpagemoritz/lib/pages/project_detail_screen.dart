@@ -18,13 +18,7 @@ class ProjectDetailScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  const Text(
-                    'Project Title',
-                    style: TextStyle(
-                      fontSize: 30,
-                      letterSpacing: 0.8,
-                    ),
-                  ),
+                  Text(' '),
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Image.network(

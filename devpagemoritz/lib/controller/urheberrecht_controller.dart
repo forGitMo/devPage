@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ImpressumController {
+class UrheberController {
   static String _stringToMarkdown(String str) {
     return str.replaceAll('\\n', '\n');
   }

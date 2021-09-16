@@ -6,6 +6,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 class ImpressumScreen extends StatelessWidget {
   const ImpressumScreen({Key? key}) : super(key: key);
   static const routeName = '/impressum-screen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
