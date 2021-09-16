@@ -10,7 +10,7 @@ class DatenschutzScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DatenSchutz'),
+        title: const Text('DatenSchutz'),
       ),
       body: DefaultTextStyle(
         style: const TextStyle(color: Colors.white),

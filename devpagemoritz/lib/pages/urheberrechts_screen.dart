@@ -10,7 +10,7 @@ class UrheberechtsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Urheberrecht'),
+        title: const Text('Urheberrecht'),
       ),
       body: DefaultTextStyle(
         style: const TextStyle(color: Colors.white),

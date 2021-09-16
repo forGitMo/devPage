@@ -11,7 +11,7 @@ class ImpressumScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Impressum'),
+        title: const Text('Impressum'),
       ),
       body: DefaultTextStyle(
         style: const TextStyle(color: Colors.white),

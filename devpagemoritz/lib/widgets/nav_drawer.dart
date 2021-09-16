@@ -16,11 +16,14 @@ class NavDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            padding: EdgeInsets.zero,
-            child: Image.asset(
-              'lib/assets/images/project_manager.jpg',
-              fit: BoxFit.cover,
+          Container(
+            color: Colors.white,
+            child: DrawerHeader(
+              padding: EdgeInsets.zero,
+              child: Image.asset(
+                'lib/assets/images/project_manager.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           ListTile(
@@ -70,6 +73,9 @@ class NavDrawer extends StatelessWidget {
               Navigator.of(context)
                   .pushNamed(DatenschutzScreen.routeName, arguments: {})
             },
+          ),
+          const SizedBox(
+            height: 40,
           ),
           ListTile(
             leading: const Icon(Icons.logout),
