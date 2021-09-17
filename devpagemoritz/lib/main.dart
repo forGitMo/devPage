@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const ProjectScreen(),
-        ProjectItem.routeName: (context) => ProjectDetailScreen(),
         ContactScreen.routeName: (context) => const ContactScreen(),
         AboutScreen.routeName: (context) => const AboutScreen(),
         ImpressumScreen.routeName: (context) => const ImpressumScreen(),
