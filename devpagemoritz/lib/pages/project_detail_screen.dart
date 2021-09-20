@@ -13,7 +13,7 @@ class ProjectDetailScreen extends StatefulWidget {
 }
 
 class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
-  void _launchURL() async => await canLaunch(widget.project.projectUrl)
+  void launchURL() async => await canLaunch(widget.project.projectUrl)
       ? await launch(widget.project.projectUrl)
       : throw 'Could not launch url';
 
@@ -44,7 +44,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                 child: Container(
                   height: 1,
                   width: double.infinity,
-                  decoration: BoxDecoration(color: Colors.black45),
+                  decoration: const BoxDecoration(color: Colors.black45),
                 ),
               ),
               Padding(
@@ -65,7 +65,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
+              SizedBox(
                 width: 350,
                 child: Text(
                   widget.project.description,
@@ -75,8 +75,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               ),
               Container(
                 child: TextButton(
-                  child: Text('link to project repo'),
-                  onPressed: _launchURL,
+                  child: const Text('link to project repo'),
+                  onPressed: launchURL,
                 ),
               ),
               const SizedBox(

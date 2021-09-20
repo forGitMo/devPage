@@ -1,6 +1,7 @@
 import 'package:devpagemoritz/models/project.dart';
 import 'package:devpagemoritz/pages/project_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectItem extends StatefulWidget {
   static const routeName = '/projectDetail-screen';
@@ -22,7 +23,9 @@ class _ProjectItemState extends State<ProjectItem> {
     ));
   }
 
-  static const String title = 'project1';
+  void launchURL() async => await canLaunch(widget.project.projectUrl)
+      ? await launch(widget.project.projectUrl)
+      : throw 'Could not launch url';
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,10 @@ class _ProjectItemState extends State<ProjectItem> {
             topRight: Radius.circular(15),
           ),
           child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(color: Colors.black26),
+            ),
             elevation: 5,
             child: Column(
               children: [
@@ -58,7 +65,7 @@ class _ProjectItemState extends State<ProjectItem> {
                       ),
                     ),
                     Positioned(
-                      bottom: 20,
+                      bottom: 40,
                       right: 10,
                       child: Container(
                         color: Colors.black45,
@@ -79,6 +86,35 @@ class _ProjectItemState extends State<ProjectItem> {
                         ),
                       ),
                     ),
+                    Positioned(
+                      bottom: 0,
+                      right: 10,
+                      child: TextButton(
+                        child: Text('link to project repo'),
+                        onPressed: launchURL,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: SizedBox(
+                        width: 80,
+                        child: Card(
+                          color: Color.fromRGBO(255, 0, 0, 0.6),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.delete_forever_rounded,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'delete',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ],

@@ -3,9 +3,9 @@ import 'package:devpagemoritz/pages/about_screen.dart';
 import 'package:devpagemoritz/pages/contact_screen.dart';
 import 'package:devpagemoritz/pages/impressum_screen.dart';
 import 'package:devpagemoritz/pages/login_screen.dart';
-import 'package:devpagemoritz/pages/project_detail_screen.dart';
+
 import 'package:devpagemoritz/pages/urheberrechts_screen.dart';
-import 'package:devpagemoritz/widgets/project_item.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'pages/project_screen.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const ProjectScreen(),
+        '/': (context) => ProjectScreen(),
         ContactScreen.routeName: (context) => const ContactScreen(),
         AboutScreen.routeName: (context) => const AboutScreen(),
         ImpressumScreen.routeName: (context) => const ImpressumScreen(),

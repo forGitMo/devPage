@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
   static const routeName = '/about-screen';
+  static launchURL() async => await canLaunch('https://github.com/forGitMo')
+      ? await launch('https://github.com/forGitMo')
+      : throw 'Could not launch url';
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +15,7 @@ class AboutScreen extends StatelessWidget {
         title: const Text('About'),
       ),
       body: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(top: 20),
         child: Column(
           children: <Widget>[
             Container(
@@ -45,7 +49,7 @@ class AboutScreen extends StatelessWidget {
             Column(
               children: const [
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
                     'Im a developer',
                     style: TextStyle(
@@ -64,7 +68,11 @@ class AboutScreen extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                )
+                ),
+                TextButton(
+                  child: const Text('link to project repo'),
+                  onPressed: launchURL,
+                ),
               ],
             )
           ],

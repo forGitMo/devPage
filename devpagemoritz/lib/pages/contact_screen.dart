@@ -128,12 +128,12 @@ class ContactScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Other',
+                                'Github',
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                               Flexible(
                                 child: Text(
-                                  '+49 157 31125645',
+                                  'forGitMo',
                                   style: TextStyle(fontSize: 10),
                                   textAlign: TextAlign.center,
                                 ),

@@ -1,14 +1,48 @@
 import 'package:devpagemoritz/controller/project_controller.dart';
 import 'package:devpagemoritz/models/project.dart';
-import 'package:devpagemoritz/pages/project_detail_screen.dart';
+import 'package:devpagemoritz/pages/input_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/project_item.dart';
 import '../widgets/nav_drawer.dart';
 
-class ProjectScreen extends StatelessWidget {
+class ProjectScreen extends StatefulWidget {
   static const routeName = '/projectDeatils-screen';
+  ProjectScreen({Key? key}) : super(key: key);
 
-  const ProjectScreen({Key? key}) : super(key: key);
+  @override
+  State<ProjectScreen> createState() => _ProjectScreenState();
+}
+
+class _ProjectScreenState extends State<ProjectScreen> {
+  final List<Project> _Projects = [
+    /*   Transaction(
+      id: '1',
+      title: 'David',
+      amount: 150.00,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: '2',
+      title: 'Darius',
+      amount: 5.00,
+      date: DateTime.now(),
+    ),
+    */
+  ];
+
+  _addNewProject(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: const InputScreen(),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,12 +70,14 @@ class ProjectScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: const Icon(Icons.add),
-        backgroundColor: Colors.green,
-      ),
+          child: const Icon(Icons.add),
+          backgroundColor: Colors.deepPurple,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => _addNewProject(context)),
+            );
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
