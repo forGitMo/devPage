@@ -5,13 +5,14 @@ class Project {
   String title;
   String description;
   String imgUrl;
+  String projectUrl;
 
-  Project({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.imgUrl,
-  });
+  Project(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.imgUrl,
+      required this.projectUrl});
 
   Map<String, dynamic> toMap() {
     return {
@@ -19,6 +20,7 @@ class Project {
       'title': title,
       'description': description,
       'imgUrl': imgUrl,
+      'projectUrl': projectUrl,
     };
   }
 
@@ -27,6 +29,7 @@ class Project {
       id: map['id'],
       title: map['title'],
       description: _stringToMarkdown(map['description']),
+      projectUrl: map['projectUrl'],
       imgUrl: map['imgUrl'],
     );
   }
