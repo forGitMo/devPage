@@ -48,7 +48,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Card(
                   child: Image.network(widget.project.imgUrl),
                   elevation: 5,
@@ -56,12 +56,14 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               ),
               Container(
                 width: 350,
-                child: Text(
+                child: const Text(
                   'description:',
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.start,
                 ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Container(
                 width: 350,
@@ -76,7 +78,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                   child: Text('link to project repo'),
                   onPressed: _launchURL,
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 40,
+              ),
             ],
           ),
         ),

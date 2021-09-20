@@ -19,24 +19,30 @@ class ProjectScreen extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: SingleChildScrollView(
-        child: FutureBuilder<List<Project>>(
-          future: ProjectController.loadAllProject(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return ProjectItem(project: snapshot.data![index]);
-                },
-              );
-            } else {
-              return Container();
-            }
-          },
-        ),
+      body: FutureBuilder<List<Project>>(
+        future: ProjectController.loadAllProject(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ProjectItem(project: snapshot.data![index]);
+              },
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.green,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
