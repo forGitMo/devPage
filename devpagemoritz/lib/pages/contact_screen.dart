@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 //import 'dart:async';
 
 //import 'package:flutter/services.dart';
@@ -21,8 +22,8 @@ class ContactScreen extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Container(
-            height: 50,
+          const SizedBox(
+            height: 60,
           ),
           const Text(
             'headline',
@@ -31,7 +32,13 @@ class ContactScreen extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const Text('Have any questions? Id love to hear from you.'),
+          SizedBox(
+            height: 20,
+          ),
+          const Text(
+            'Have any questions? \n I would love to hear from you.',
+            textAlign: TextAlign.center,
+          ),
           Container(
             height: 25,
           ),
@@ -45,9 +52,10 @@ class ContactScreen extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         InkWell(
-                          onTap: () => {}, // _callNumber,
+                          onTap: () =>
+                              launch("tel://015731125645"), // _callNumber,
                           child: Container(
-                            height: 100,
+                            height: 120,
                             margin: const EdgeInsets.only(top: 5),
                             padding: const EdgeInsets.all(8),
                             child: Column(
@@ -78,70 +86,76 @@ class ContactScreen extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 2,
-                  child: Card(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 110,
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.email,
-                                  size: 24,
+                  child: InkWell(
+                    onTap: () => launch("mailto:amelang.moritz@gmail.com"),
+                    child: Card(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: 130,
+                            padding: const EdgeInsets.all(8),
+                            child: Column(
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.email,
+                                    size: 24,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'Write me',
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  'amelang.moritz@gmail.com',
-                                  style: TextStyle(fontSize: 12),
+                                Text(
+                                  'Write me',
+                                  style: TextStyle(fontWeight: FontWeight.w600),
                                 ),
-                              ),
-                            ],
+                                Flexible(
+                                  child: Text(
+                                    'amelang.moritz@gmail.com',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: Card(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 100,
-                          margin: const EdgeInsets.only(top: 5),
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            children: const [
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.account_circle,
-                                  size: 24,
+                  child: InkWell(
+                    onTap: () => launch('https://github.com/forGitMo'),
+                    child: Card(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: 120,
+                            margin: const EdgeInsets.only(top: 5),
+                            padding: const EdgeInsets.all(8),
+                            child: Column(
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.account_circle,
+                                    size: 24,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'Github',
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  'forGitMo',
-                                  style: TextStyle(fontSize: 10),
-                                  textAlign: TextAlign.center,
+                                Text(
+                                  'Github',
+                                  style: TextStyle(fontWeight: FontWeight.w600),
                                 ),
-                              ),
-                            ],
+                                Flexible(
+                                  child: Text(
+                                    'forGitMo',
+                                    style: TextStyle(fontSize: 10),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

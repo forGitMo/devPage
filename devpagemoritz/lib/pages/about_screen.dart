@@ -24,18 +24,23 @@ class AboutScreen extends StatelessWidget {
               child: Center(
                 child: Row(
                   children: <Widget>[
-                    const CircleAvatar(
-                      radius: 35.0,
-                      backgroundColor: Colors.deepPurple,
-                      backgroundImage: NetworkImage(
-                          'https://yt3.ggpht.com/ytc/AAUvwnhYSxHrN2tiu9XjRPw4JUigbINQbLZKe9TXqi7Gqw=s900-c-k-c0x00ffffff-no-rj'),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                      ),
+                      child: const CircleAvatar(
+                        radius: 35.0,
+                        backgroundColor: Colors.deepPurple,
+                        backgroundImage: NetworkImage(
+                            'https://yt3.ggpht.com/ytc/AAUvwnhYSxHrN2tiu9XjRPw4JUigbINQbLZKe9TXqi7Gqw=s900-c-k-c0x00ffffff-no-rj'),
+                      ),
                     ),
                     Container(
                       margin: const EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 15,
                       ),
                       child: const Text(
-                        'Mortiz Amelang',
+                        'Mortiz \nAmelang',
                         style: TextStyle(
                           fontSize: 25,
                           color: Colors.black,
@@ -68,10 +73,6 @@ class AboutScreen extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                ),
-                TextButton(
-                  child: const Text('link to project repo'),
-                  onPressed: launchURL,
                 ),
               ],
             )

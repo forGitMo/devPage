@@ -98,7 +98,6 @@ class ProjectItem extends StatelessWidget {
                       child: Row(
                         children: [
                           Container(
-                            width: 80,
                             child: InkWell(
                               onTap: () {
                                 FirebaseFirestore.instance
@@ -114,38 +113,48 @@ class ProjectItem extends StatelessWidget {
                               },
                               child: Card(
                                 color: Color.fromRGBO(255, 0, 0, 0.6),
-                                child: Row(
-                                  children: const [
-                                    Icon(
-                                      Icons.delete_forever_rounded,
-                                      color: Colors.white,
-                                    ),
-                                    Text(
-                                      'delete',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.delete_forever_rounded,
+                                        color: Colors.white,
+                                        size: 17,
+                                      ),
+                                      Text(
+                                        'delete',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                           Container(
-                            width: 70,
                             child: InkWell(
-                              onTap: () => print('edit'),
+                              onTap: () {
+                                print('edit');
+                                onDelteChange();
+                              },
                               child: Card(
                                 color: Color.fromRGBO(0, 0, 255, 0.6),
-                                child: Row(
-                                  children: const [
-                                    Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ),
-                                    Text(
-                                      'edit',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                        size: 17,
+                                      ),
+                                      Text(
+                                        'edit',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
