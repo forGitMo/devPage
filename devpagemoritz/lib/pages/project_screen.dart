@@ -7,7 +7,9 @@ import '../widgets/nav_drawer.dart';
 
 class ProjectScreen extends StatefulWidget {
   static const routeName = '/projectDeatils-screen';
-  ProjectScreen({Key? key}) : super(key: key);
+  ProjectScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ProjectScreen> createState() => _ProjectScreenState();
@@ -61,7 +63,12 @@ class _ProjectScreenState extends State<ProjectScreen> {
               itemCount: snapshot.data!.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ProjectItem(project: snapshot.data![index]);
+                return ProjectItem(
+                  project: snapshot.data![index],
+                  onDelteChange: () => setState(
+                    () => print('reload'),
+                  ),
+                );
               },
             );
           } else {

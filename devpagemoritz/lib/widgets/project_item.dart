@@ -1,30 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devpagemoritz/models/project.dart';
 import 'package:devpagemoritz/pages/project_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ProjectItem extends StatefulWidget {
+class ProjectItem extends StatelessWidget {
   static const routeName = '/projectDetail-screen';
-
-  const ProjectItem({Key? key, required this.project}) : super(key: key);
+  final Function() onDelteChange;
   final Project project;
+  ProjectItem({
+    required this.onDelteChange,
+    required this.project,
+  });
 
-  @override
-  State<ProjectItem> createState() => _ProjectItemState();
-}
-
-class _ProjectItemState extends State<ProjectItem> {
   String imageUrl =
       'https://user-images.githubusercontent.com/1078012/56232171-0a7fcb00-6078-11e9-84d7-58994cef8d09.png';
 
   void selectProject(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(
-      builder: (context) => ProjectDetailScreen(project: widget.project),
+      builder: (context) => ProjectDetailScreen(project: project),
     ));
   }
 
-  void launchURL() async => await canLaunch(widget.project.projectUrl)
-      ? await launch(widget.project.projectUrl)
+  void launchURL() async => await canLaunch(project.projectUrl)
+      ? await launch(project.projectUrl)
       : throw 'Could not launch url';
 
   @override
@@ -58,7 +57,7 @@ class _ProjectItemState extends State<ProjectItem> {
                         topRight: Radius.circular(8),
                       ),
                       child: Image.network(
-                        widget.project.imgUrl,
+                        project.imgUrl,
                         height: 250,
                         width: double.infinity,
                         fit: BoxFit.cover,
@@ -74,7 +73,7 @@ class _ProjectItemState extends State<ProjectItem> {
                           vertical: 5,
                         ),
                         child: Text(
-                          widget.project.title,
+                          project.title,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 22,
@@ -90,29 +89,68 @@ class _ProjectItemState extends State<ProjectItem> {
                       bottom: 0,
                       right: 10,
                       child: TextButton(
-                        child: Text('link to project repo'),
+                        child: const Text('link to project repo'),
                         onPressed: launchURL,
                       ),
                     ),
                     TextButton(
                       onPressed: () {},
-                      child: SizedBox(
-                        width: 80,
-                        child: Card(
-                          color: Color.fromRGBO(255, 0, 0, 0.6),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.delete_forever_rounded,
-                                color: Colors.white,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 80,
+                            child: InkWell(
+                              onTap: () {
+                                FirebaseFirestore.instance
+                                    .doc(
+                                        'projects/${project.id}') // <-- Doc ID to be deleted.
+                                    .delete() // <-- Delete
+                                    .then((_) {
+                                  print('Deleted');
+                                  //
+                                  onDelteChange();
+                                }).catchError((error) =>
+                                        print('Delete failed: $error'));
+                              },
+                              child: Card(
+                                color: Color.fromRGBO(255, 0, 0, 0.6),
+                                child: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.delete_forever_rounded,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      'delete',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                'delete',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                          Container(
+                            width: 70,
+                            child: InkWell(
+                              onTap: () => print('edit'),
+                              child: Card(
+                                color: Color.fromRGBO(0, 0, 255, 0.6),
+                                child: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      'edit',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   ],

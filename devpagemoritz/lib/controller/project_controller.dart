@@ -7,7 +7,7 @@ class ProjectController {
         (await FirebaseFirestore.instance.collection('projects').get()).docs;
     return docs
         .map(
-          (doc) => Project.fromMap(doc.data()),
+          (doc) => Project.fromDocumentSnapshot(doc),
         )
         .toList();
   }

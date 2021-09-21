@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Project {
   String id;
   String title;
@@ -24,20 +26,16 @@ class Project {
     };
   }
 
-  factory Project.fromMap(Map<String, dynamic> map) {
+  factory Project.fromDocumentSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> doc) {
     return Project(
-      id: map['id'],
-      title: map['title'],
-      description: _stringToMarkdown(map['description']),
-      projectUrl: map['projectUrl'],
-      imgUrl: map['imgUrl'],
+      id: doc.id,
+      title: doc['title'],
+      description: _stringToMarkdown(doc['description']),
+      projectUrl: doc['projectUrl'],
+      imgUrl: doc['imgUrl'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Project.fromJson(String source) =>
-      Project.fromMap(json.decode(source));
 
   static String _stringToMarkdown(String str) {
     return str.replaceAll('\\n', '\n');
