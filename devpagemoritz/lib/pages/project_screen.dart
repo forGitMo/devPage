@@ -16,21 +16,7 @@ class ProjectScreen extends StatefulWidget {
 }
 
 class _ProjectScreenState extends State<ProjectScreen> {
-  final List<Project> _Projects = [
-    /*   Transaction(
-      id: '1',
-      title: 'David',
-      amount: 150.00,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: '2',
-      title: 'Darius',
-      amount: 5.00,
-      date: DateTime.now(),
-    ),
-    */
-  ];
+  final List<Project> _Projects = [];
 
   _addNewProject(BuildContext ctx) {
     showModalBottomSheet(
@@ -38,7 +24,15 @@ class _ProjectScreenState extends State<ProjectScreen> {
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: const InputScreen(),
+          child: InputScreen(
+            Project(
+              id: '',
+              title: '',
+              description: '',
+              imgUrl: '',
+              projectUrl: '',
+            ),
+          ),
           behavior: HitTestBehavior.opaque,
         );
       },
@@ -82,7 +76,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => _addNewProject(context)),
+              MaterialPageRoute(
+                builder: (context) => _addNewProject(context),
+              ),
             );
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
