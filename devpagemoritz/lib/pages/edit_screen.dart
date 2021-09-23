@@ -1,35 +1,27 @@
-import 'package:devpagemoritz/pages/project_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:devpagemoritz/models/project.dart';
+import 'package:flutter/material.dart';
 
-class InputScreen extends StatefulWidget {
-  InputScreen(this.project);
+class EditScreen extends StatelessWidget {
+  EditScreen({required this.project});
   final Project project;
 
-  @override
-  State<InputScreen> createState() => _InputScreenState();
-}
-
-class _InputScreenState extends State<InputScreen> {
   TextEditingController title = TextEditingController();
-
   TextEditingController description = TextEditingController();
-
   TextEditingController imgUrl = TextEditingController();
-
   TextEditingController projectUrl = TextEditingController();
 
-  final firebase = FirebaseFirestore.instance;
-
-  createData() async {
+  final firestore = FirebaseFirestore.instance;
+  void _edit() async {
     try {
-      await firebase.collection('projects').doc().set({
+      firestore.collection('projects').doc('${project.id}').update({
         'title': title.text,
         'description': description.text,
         'imgUrl': imgUrl.text,
-        'projectUrl': projectUrl.text
+        'projectUrl': projectUrl.text,
       });
+      print('documentSnapshot.data()');
     } catch (e) {
       print(e);
     }
@@ -61,7 +53,7 @@ class _InputScreenState extends State<InputScreen> {
                 child: TextField(
                   controller: title,
                   decoration: const InputDecoration(
-                    hintText: 'title',
+                    hintText: 'new title',
                     hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
                     prefixIcon: Icon(
                       Icons.title_rounded,
@@ -75,7 +67,7 @@ class _InputScreenState extends State<InputScreen> {
                 child: TextField(
                   controller: description,
                   decoration: const InputDecoration(
-                    hintText: 'description',
+                    hintText: 'new description',
                     hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
                     prefixIcon: Icon(
                       Icons.text_snippet_outlined,
@@ -89,7 +81,7 @@ class _InputScreenState extends State<InputScreen> {
                 child: TextField(
                   controller: imgUrl,
                   decoration: const InputDecoration(
-                    hintText: 'imgUrl',
+                    hintText: 'new imgUrl',
                     hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
                     prefixIcon: Icon(
                       Icons.image,
@@ -103,7 +95,7 @@ class _InputScreenState extends State<InputScreen> {
                 child: TextField(
                   controller: projectUrl,
                   decoration: const InputDecoration(
-                    hintText: 'projectUrl',
+                    hintText: 'new projectUrl',
                     hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
                     prefixIcon: Icon(
                       Icons.folder_open_outlined,
@@ -114,16 +106,14 @@ class _InputScreenState extends State<InputScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  createData();
+                  _edit();
                   title.clear();
                   description.clear();
                   imgUrl.clear();
                   projectUrl.clear();
-                  Navigator.of(context)
-                      .pushNamed(ProjectScreen.routeName, arguments: {});
                 },
                 child: const Text(
-                  'create',
+                  'edit',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.w700,

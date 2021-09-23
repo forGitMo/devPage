@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devpagemoritz/models/project.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -16,6 +17,15 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   void launchURL() async => await canLaunch(widget.project.projectUrl)
       ? await launch(widget.project.projectUrl)
       : throw 'Could not launch url';
+
+  updateData() {
+    FirebaseFirestore.instance
+        .collection('projects')
+        .doc()
+        .update(widget.project.toMap())
+        .whenComplete(() => print('updated'))
+        .catchError((e) => print(e));
+  }
 
   @override
   Widget build(BuildContext context) {

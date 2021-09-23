@@ -1,5 +1,6 @@
 import 'package:devpagemoritz/controller/project_controller.dart';
 import 'package:devpagemoritz/models/project.dart';
+import 'package:devpagemoritz/pages/edit_screen.dart';
 import 'package:devpagemoritz/pages/input_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/project_item.dart';
@@ -39,6 +40,28 @@ class _ProjectScreenState extends State<ProjectScreen> {
     );
   }
 
+  _editProject(BuildContext ctx) {
+    print('start Modal edit');
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: EditScreen(
+            project: Project(
+              id: '',
+              title: '',
+              description: '',
+              imgUrl: '',
+              projectUrl: '',
+            ),
+          ),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +83,15 @@ class _ProjectScreenState extends State<ProjectScreen> {
                 return ProjectItem(
                   project: snapshot.data![index],
                   onDelteChange: () => setState(
-                    () => print('reload'),
+                    () {
+                      print('reload');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => _editProject(context),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
