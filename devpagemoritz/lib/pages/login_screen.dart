@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devpagemoritz/pages/project_screen.dart';
+import 'package:devpagemoritz/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final AuthService _auth = AuthService();
+
   showWarningtDialog(BuildContext context) {
     // set up the button
     Widget okButton = InkWell(
@@ -91,10 +95,10 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: <Widget>[
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
                   'Login',
@@ -103,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextField(
                 controller: email,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Email',
                   hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
                   prefixIcon: Icon(
@@ -114,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextField(
                 controller: password,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Password',
                   hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
                   prefixIcon: Icon(
@@ -137,11 +141,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         email.clear();
                         password.clear();
                       },
-                      child: Text(
-                        'register',
-                        style: TextStyle(color: Colors.black),
+                      child: Row(
+                        children: const [
+                          Text(
+                            'register',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Icon(
+                            Icons.supervised_user_circle,
+                            color: Colors.black,
+                          )
+                        ],
                       )),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Row(children: [
@@ -149,14 +161,35 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {
                         if (email.text == 'amelang.moritz@gmail.com' &&
                             password.text == 'trol1234') {
-                          Navigator.of(context).pop(ProjectScreen);
+                          Navigator.of(context).pushReplacementNamed('/');
                         }
                         showWarningtDialog(context);
                       },
                       child: Row(
-                        children: [
+                        children: const [
                           Text('login'),
                           Icon(Icons.login),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        dynamic result = await _auth.signInAnon();
+                        if (result == null) {
+                          print('error to signing in');
+                        } else {
+                          print('signing in.. ');
+                          print(result.uid);
+                          Navigator.of(context).pushReplacementNamed('/');
+                        }
+                      },
+                      child: Row(
+                        children: const [
+                          Text('login anon'),
+                          Icon(Icons.follow_the_signs_outlined),
                         ],
                       ),
                     ),

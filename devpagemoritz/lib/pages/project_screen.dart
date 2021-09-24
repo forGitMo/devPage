@@ -2,6 +2,7 @@ import 'package:devpagemoritz/controller/project_controller.dart';
 import 'package:devpagemoritz/models/project.dart';
 import 'package:devpagemoritz/pages/edit_screen.dart';
 import 'package:devpagemoritz/pages/input_screen.dart';
+import 'package:devpagemoritz/services/auth.dart';
 import 'package:flutter/material.dart';
 import '../widgets/project_item.dart';
 import '../widgets/nav_drawer.dart';
@@ -62,6 +63,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
     );
   }
 
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +73,21 @@ class _ProjectScreenState extends State<ProjectScreen> {
           'project Overview',
           style: TextStyle(color: Colors.white),
         ),
+        actions: <Widget>[
+          TextButton.icon(
+            onPressed: () async {
+              await _auth.signOut();
+            },
+            icon: Icon(
+              Icons.logout_outlined,
+              color: Colors.white,
+            ),
+            label: Text(
+              'logout',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
       ),
       body: FutureBuilder<List<Project>>(
         future: ProjectController.loadAllProject(),
