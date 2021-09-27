@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1012877577802",
+    "project_id": "dev-page-moritz",
+    "storage_bucket": "dev-page-moritz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012877577802:android:5d4781757f493c03ece0b3",
+        "android_client_info": {
+          "package_name": "com.example.devpagemoritz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012877577802-7bfg816gfe36nkr9iv1ng1n27u72pecg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJzGUp9IGrNZdg8op6RCFnWKhOslpM_WY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012877577802-7bfg816gfe36nkr9iv1ng1n27u72pecg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
