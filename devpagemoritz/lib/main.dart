@@ -4,6 +4,7 @@ import 'package:devpagemoritz/pages/about_screen.dart';
 import 'package:devpagemoritz/pages/contact_screen.dart';
 import 'package:devpagemoritz/pages/impressum_screen.dart';
 import 'package:devpagemoritz/pages/login_screen.dart';
+import 'package:devpagemoritz/pages/register_screen.dart';
 
 import 'package:devpagemoritz/pages/urheberrechts_screen.dart';
 import 'package:devpagemoritz/services/auth.dart';
@@ -36,12 +37,13 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => const Wrapper(),
+          '/': (context) => Wrapper(),
+          '/RegisterScreen': (context) => Register(),
           '/PojectScreen': (context) => ProjectScreen(),
           ContactScreen.routeName: (context) => const ContactScreen(),
           AboutScreen.routeName: (context) => const AboutScreen(),
           ImpressumScreen.routeName: (context) => const ImpressumScreen(),
-          LoginScreen.routeName: (context) => const LoginScreen(),
+          '/LoginScreen': (context) => const LoginScreen(),
           UrheberechtsScreen.routeName: (context) => const UrheberechtsScreen(),
           DatenschutzScreen.routeName: (context) => const DatenschutzScreen(),
         },

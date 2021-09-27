@@ -92,111 +92,121 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: null,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(
-                height: 200,
-              ),
-              const Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'Login',
-                  style: TextStyle(fontSize: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                const SizedBox(
+                  height: 160,
                 ),
-              ),
-              TextField(
-                controller: email,
-                decoration: const InputDecoration(
-                  hintText: 'Email',
-                  hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
-                  prefixIcon: Icon(
-                    Icons.mail_outline,
-                    color: Colors.black87,
+                const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(fontSize: 40),
                   ),
                 ),
-              ),
-              TextField(
-                controller: password,
-                decoration: const InputDecoration(
-                  hintText: 'Password',
-                  hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
-                  prefixIcon: Icon(
-                    Icons.vpn_key_outlined,
-                    color: Colors.black87,
-                  ),
+                SizedBox(
+                  height: 50,
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        if (email.text != "" && password.text != '') {
-                          createUser();
-                          showAlertDialog(context);
-                        } else {
-                          print('we need data to create a user');
-                        }
-                        email.clear();
-                        password.clear();
-                      },
-                      child: Row(
-                        children: const [
-                          Text(
-                            'register',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Icon(
-                            Icons.supervised_user_circle,
-                            color: Colors.black,
-                          )
-                        ],
-                      )),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Row(children: [
-                    InkWell(
-                      onTap: () {
-                        if (email.text == 'amelang.moritz@gmail.com' &&
-                            password.text == 'trol1234') {
-                          Navigator.of(context).pushReplacementNamed('/');
-                        }
-                        showWarningtDialog(context);
-                      },
-                      child: Row(
-                        children: const [
-                          Text('login'),
-                          Icon(Icons.login),
-                        ],
-                      ),
+                TextField(
+                  controller: email,
+                  onChanged: (val) {
+                    setState(() {
+                      email.text = val;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Email',
+                    hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
+                    prefixIcon: Icon(
+                      Icons.mail_outline,
+                      color: Colors.black87,
                     ),
+                  ),
+                ),
+                TextField(
+                  controller: password,
+                  obscureText: true,
+                  onChanged: (val) {
+                    password.text = val;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Password',
+                    hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
+                    prefixIcon: Icon(
+                      Icons.vpn_key_outlined,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () async {
+                          Navigator.of(context)
+                              .pushReplacementNamed('/RegisterScreen');
+                          email.clear();
+                          password.clear();
+                        },
+                        child: Row(
+                          children: const [
+                            Text(
+                              'register',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            Icon(
+                              Icons.supervised_user_circle,
+                              color: Colors.black,
+                            )
+                          ],
+                        )),
                     const SizedBox(
                       width: 10,
                     ),
-                    InkWell(
-                      onTap: () async {
-                        dynamic result = await _auth.signInAnon();
-                        if (result == null) {
-                          print('error to signing in');
-                        } else {
-                          print('signing in.. ');
-                          print(result.uid);
-                          Navigator.of(context).pushReplacementNamed('/');
-                        }
-                      },
-                      child: Row(
-                        children: const [
-                          Text('login anon'),
-                          Icon(Icons.follow_the_signs_outlined),
-                        ],
+                    Row(children: [
+                      InkWell(
+                        onTap: () {
+                          if (email.text == 'amelang.moritz@gmail.com' &&
+                              password.text == 'trol1234') {
+                            Navigator.of(context).pushReplacementNamed('/');
+                          }
+                          showWarningtDialog(context);
+                        },
+                        child: Row(
+                          children: const [
+                            Text('login'),
+                            Icon(Icons.login),
+                          ],
+                        ),
                       ),
-                    ),
-                  ]),
-                ],
-              ),
-            ],
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          dynamic result = await _auth.signInAnon();
+                          if (result == null) {
+                            print('error to signing in');
+                          } else {
+                            print('signing in.. ');
+                            print(result.uid);
+                            Navigator.of(context).pushReplacementNamed('/');
+                          }
+                        },
+                        child: Row(
+                          children: const [
+                            Text('login anon'),
+                            Icon(Icons.follow_the_signs_outlined),
+                          ],
+                        ),
+                      ),
+                    ]),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

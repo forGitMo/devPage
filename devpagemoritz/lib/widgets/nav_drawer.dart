@@ -81,8 +81,7 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.logout),
             title: const Text('Log out'),
             onTap: () => {
-              Navigator.of(context)
-                  .pushNamed(LoginScreen.routeName, arguments: {})
+              Navigator.of(context).pushNamed('/LoginScreen', arguments: {})
             },
           ),
         ],
