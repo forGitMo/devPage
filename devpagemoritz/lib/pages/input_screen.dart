@@ -2,6 +2,7 @@ import 'package:devpagemoritz/pages/project_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devpagemoritz/models/project.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InputScreen extends StatefulWidget {
   InputScreen(this.project);
@@ -12,6 +13,7 @@ class InputScreen extends StatefulWidget {
 }
 
 class _InputScreenState extends State<InputScreen> {
+  ImagePicker picker = ImagePicker();
   TextEditingController title = TextEditingController();
 
   TextEditingController description = TextEditingController();
@@ -86,14 +88,17 @@ class _InputScreenState extends State<InputScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: imgUrl,
-                  decoration: const InputDecoration(
-                    hintText: 'imgUrl',
-                    hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
-                    prefixIcon: Icon(
-                      Icons.image,
-                      color: Colors.black87,
+                child: InkWell(
+                  onTap: () {},
+                  child: TextField(
+                    controller: imgUrl,
+                    decoration: const InputDecoration(
+                      hintText: 'imgUrl',
+                      hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
+                      prefixIcon: Icon(
+                        Icons.image,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
                 ),

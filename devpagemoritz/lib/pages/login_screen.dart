@@ -115,6 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextFormField(
                     controller: email,
+                    textDirection: TextDirection.ltr,
+                    keyboardType: TextInputType.emailAddress,
                     validator: (val) => val!.isEmpty ? 'Enter an Email' : null,
                     onChanged: (val) {
                       setState(() {
@@ -139,9 +141,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextFormField(
                     controller: password,
+                    keyboardType: TextInputType.visiblePassword,
                     validator: (val) =>
                         val!.length <= 6 ? 'Enter an password >= 6' : null,
                     obscureText: true,
+                    textDirection: TextDirection.ltr,
                     onChanged: (val) {
                       password.text = val;
                     },
@@ -196,6 +200,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               } else {
                                 Navigator.of(context).pushReplacementNamed('/');
                                 err = '';
+                                email.clear();
+                                password.clear();
                               }
 
                               email.clear();

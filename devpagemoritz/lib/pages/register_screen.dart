@@ -52,6 +52,7 @@ class _nameState extends State<Register> {
                       email.text = val;
                     });
                   },
+                  keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     hintText: 'Email',
                     hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -75,6 +76,7 @@ class _nameState extends State<Register> {
                   validator: (val) =>
                       val!.length <= 6 ? 'Enter an password >= 6' : null,
                   controller: password,
+                  keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   onChanged: (val) {
                     setState(() {

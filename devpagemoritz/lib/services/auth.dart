@@ -4,6 +4,11 @@ import 'package:devpagemoritz/models/user.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  //log Out
+  Future signOut() async {
+    await _auth.signOut();
+  }
+
   //create user obj based on FirebaseUser
   MyUsers? _userFromFirebaseUser(User? user) {
     if (user != null) {
@@ -54,16 +59,6 @@ class AuthService {
           email: email, password: password);
       User? user = result.user;
       return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  // sign out
-  Future signOut() async {
-    try {
-      return await _auth.signOut();
     } catch (e) {
       print(e.toString());
       return null;

@@ -5,11 +5,14 @@ import 'package:devpagemoritz/pages/datenschutz_screen.dart';
 import 'package:devpagemoritz/pages/urheberrechts_screen.dart';
 import 'package:devpagemoritz/pages/login_screen.dart';
 import 'package:devpagemoritz/pages/project_screen.dart';
+import 'package:devpagemoritz/services/auth.dart';
+import 'package:devpagemoritz/widgets/wrapper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NavDrawer extends StatelessWidget {
-  const NavDrawer({Key? key}) : super(key: key);
-
+  NavDrawer({Key? key}) : super(key: key);
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -80,8 +83,9 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Log out'),
-            onTap: () => {
-              Navigator.of(context).pushNamed('/LoginScreen', arguments: {})
+            onTap: () async {
+              await _auth.signOut();
+              Navigator.of(context).pushNamed('/LoginScreen', arguments: {});
             },
           ),
         ],

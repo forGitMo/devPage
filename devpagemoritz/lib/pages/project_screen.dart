@@ -2,7 +2,10 @@ import 'package:devpagemoritz/controller/project_controller.dart';
 import 'package:devpagemoritz/models/project.dart';
 import 'package:devpagemoritz/pages/edit_screen.dart';
 import 'package:devpagemoritz/pages/input_screen.dart';
+import 'package:devpagemoritz/pages/login_screen.dart';
 import 'package:devpagemoritz/services/auth.dart';
+import 'package:devpagemoritz/widgets/wrapper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../widgets/project_item.dart';
 import '../widgets/nav_drawer.dart';
@@ -67,24 +70,32 @@ class _ProjectScreenState extends State<ProjectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const NavDrawer(),
+      drawer: NavDrawer(),
       appBar: AppBar(
         title: const Text(
           'project Overview',
           style: TextStyle(color: Colors.white),
         ),
         actions: <Widget>[
-          TextButton.icon(
-            onPressed: () async {
-              await _auth.signOut();
-            },
-            icon: Icon(
-              Icons.logout_outlined,
-              color: Colors.white,
-            ),
-            label: Text(
-              'logout',
-              style: TextStyle(color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () async {
+                dynamic result = await _auth.signOut();
+                Navigator.of(context).pushNamed('/LoginScreen');
+              },
+              child: Row(
+                children: const [
+                  Icon(
+                    Icons.logout_outlined,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    'logout',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
