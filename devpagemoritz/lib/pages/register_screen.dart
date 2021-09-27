@@ -28,11 +28,11 @@ class _nameState extends State<Register> {
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Column(
               children: <Widget>[
                 const SizedBox(
-                  height: 200,
+                  height: 160,
                 ),
                 const Padding(
                   padding: EdgeInsets.all(10),
@@ -40,6 +40,9 @@ class _nameState extends State<Register> {
                     'Register',
                     style: TextStyle(fontSize: 40),
                   ),
+                ),
+                SizedBox(
+                  height: 50,
                 ),
                 TextFormField(
                   controller: email,
