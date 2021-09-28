@@ -78,7 +78,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
         ),
         actions: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15.0),
             child: InkWell(
               onTap: () async {
                 dynamic result = await _auth.signOut();
@@ -86,13 +86,20 @@ class _ProjectScreenState extends State<ProjectScreen> {
               },
               child: Row(
                 children: const [
-                  Icon(
-                    Icons.logout_outlined,
-                    color: Colors.white,
-                  ),
                   Text(
                     'logout',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 17,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: Icon(
+                      Icons.logout_outlined,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
@@ -113,12 +120,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
                   onDelteChange: () => setState(
                     () {
                       print('reload');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => _editProject(context),
-                        ),
-                      );
+                      setState(() {
+                        return _editProject(context);
+                      });
                     },
                   ),
                 );
@@ -133,12 +137,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
           child: const Icon(Icons.add),
           backgroundColor: Colors.deepPurple,
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => _addNewProject(context),
-              ),
-            );
+            setState(() {
+              return _addNewProject(context);
+            });
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
