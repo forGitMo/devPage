@@ -1,7 +1,4 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:devpagemoritz/models/project.dart';
 import 'package:flutter/material.dart';
@@ -27,15 +24,16 @@ class _EditScreenState extends State<EditScreen> {
   final firestore = FirebaseFirestore.instance;
 
   void _edit() async {
-    final projectId = widget.project.id;
     try {
-      firestore.collection('projects').doc(projectId).update(<String, dynamic>{
+      firestore.collection('projects').doc('${widget.project.id}').update({
         'id': widget.project.id,
         'title': title.text,
         'description': description.text,
         'imgUrl': imgUrl.text,
         'projectUrl': projectUrl.text,
-      }).then((_) => print('updated'));
+      });
+
+      return null;
     } catch (e) {
       print(e);
     }
@@ -64,10 +62,10 @@ class _EditScreenState extends State<EditScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
+                child: TextField(
                   controller: title,
-                  decoration: const InputDecoration(
-                    hintText: 'new title',
+                  decoration: InputDecoration(
+                    hintText: widget.project.title,
                     hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
                     prefixIcon: Icon(
                       Icons.title_rounded,
@@ -78,7 +76,7 @@ class _EditScreenState extends State<EditScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
+                child: TextField(
                   controller: description,
                   decoration: const InputDecoration(
                     hintText: 'new description',
@@ -92,7 +90,7 @@ class _EditScreenState extends State<EditScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
+                child: TextField(
                   controller: imgUrl,
                   decoration: const InputDecoration(
                     hintText: 'new imgUrl',
@@ -106,7 +104,7 @@ class _EditScreenState extends State<EditScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
+                child: TextField(
                   controller: projectUrl,
                   decoration: const InputDecoration(
                     hintText: 'new projectUrl',
@@ -119,7 +117,7 @@ class _EditScreenState extends State<EditScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   _edit();
                   title.clear();
                   description.clear();

@@ -6,6 +6,7 @@ import 'package:devpagemoritz/pages/contact_screen.dart';
 import 'package:devpagemoritz/pages/edit_screen.dart';
 import 'package:devpagemoritz/pages/impressum_screen.dart';
 import 'package:devpagemoritz/pages/login_screen.dart';
+import 'package:devpagemoritz/pages/project_detail_screen.dart';
 import 'package:devpagemoritz/pages/register_screen.dart';
 
 import 'package:devpagemoritz/pages/urheberrechts_screen.dart';
@@ -43,6 +44,15 @@ class MyApp extends StatelessWidget {
           '/RegisterScreen': (context) => Register(),
           '/PojectScreen': (context) => ProjectScreen(),
           '/EditScreen': (context) => EditScreen(
+                project: Project(
+                  description: '',
+                  id: '',
+                  imgUrl: '',
+                  projectUrl: '',
+                  title: '',
+                ),
+              ),
+          'ProjectDeatils-screen': (context) => ProjectDetailScreen(
                 project: Project(
                   description: '',
                   id: '',

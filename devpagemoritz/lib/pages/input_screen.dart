@@ -1,19 +1,73 @@
-import 'package:devpagemoritz/pages/project_screen.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:devpagemoritz/models/project.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'package:devpagemoritz/models/project.dart';
+import 'package:devpagemoritz/pages/project_screen.dart';
 
 class InputScreen extends StatefulWidget {
   InputScreen(this.project);
   final Project project;
+  var storage = FirebaseFirestore.instance;
 
   @override
   State<InputScreen> createState() => _InputScreenState();
 }
 
 class _InputScreenState extends State<InputScreen> {
-  ImagePicker picker = ImagePicker();
+  File? image;
+  var e = 0;
+  Future pickImg() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      setState(() {
+        this.image = imageTemp;
+      });
+      uploadFile(image.path);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future createImg() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+      final File? imageTemp = File(image.path);
+      setState(() {
+        this.image = imageTemp;
+      });
+      uploadFile(image.path);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+  firebase_storage.Reference ref =
+      firebase_storage.FirebaseStorage.instance.ref().child('images');
+
+  Future<void> uploadFile(String filePath) async {
+    File file = File(filePath);
+
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref('images/img.png')
+          .putFile(file);
+    } on FirebaseException catch (e) {
+      print(e);
+    }
+  }
+
   TextEditingController title = TextEditingController();
 
   TextEditingController description = TextEditingController();
@@ -23,13 +77,13 @@ class _InputScreenState extends State<InputScreen> {
   TextEditingController projectUrl = TextEditingController();
 
   final firebase = FirebaseFirestore.instance;
-
   createData() async {
     try {
+      var imagePath = image;
       await firebase.collection('projects').doc().set({
         'title': title.text,
         'description': description.text,
-        'imgUrl': imgUrl.text,
+        'imgUrl': imagePath,
         'projectUrl': projectUrl.text
       });
     } catch (e) {
@@ -57,6 +111,15 @@ class _InputScreenState extends State<InputScreen> {
               const Text(
                 'Create new project',
                 style: TextStyle(fontSize: 20),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: image != null
+                    ? Image.file(
+                        File(image!.path),
+                        scale: 13,
+                      )
+                    : FlutterLogo(),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -88,19 +151,80 @@ class _InputScreenState extends State<InputScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {},
-                  child: TextField(
-                    controller: imgUrl,
-                    decoration: const InputDecoration(
-                      hintText: 'imgUrl',
-                      hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
-                      prefixIcon: Icon(
-                        Icons.image,
-                        color: Colors.black87,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          pickImg();
+                        },
+                        child: Row(
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5,
+                              ),
+                              child: Icon(Icons.image_rounded),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5,
+                              ),
+                              child: Text(
+                                'from Gallery',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
+                    Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: Colors.grey[400],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          createImg();
+                        },
+                        child: Row(
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5,
+                              ),
+                              child: Icon(Icons.camera),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              child: Text(
+                                'from Camera',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: Colors.grey[400],
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -124,8 +248,7 @@ class _InputScreenState extends State<InputScreen> {
                   description.clear();
                   imgUrl.clear();
                   projectUrl.clear();
-                  Navigator.of(context)
-                      .pushNamed(ProjectScreen.routeName, arguments: {});
+                  Navigator.of(context).pushNamed('/', arguments: {});
                 },
                 child: const Text(
                   'create',

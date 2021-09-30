@@ -7,11 +7,12 @@ import 'package:url_launcher/url_launcher.dart';
 class ProjectItem extends StatelessWidget {
   static const routeName = '/projectDetail-screen';
   final Function() onDelteChange;
+  final Function() reload;
   final Project project;
-  ProjectItem({
-    required this.onDelteChange,
-    required this.project,
-  });
+  ProjectItem(
+      {required this.onDelteChange,
+      required this.project,
+      required this.reload});
 
   String imageUrl =
       'https://user-images.githubusercontent.com/1078012/56232171-0a7fcb00-6078-11e9-84d7-58994cef8d09.png';
@@ -107,7 +108,7 @@ class ProjectItem extends StatelessWidget {
                                     .then((_) {
                                   print('Deleted');
                                   //
-                                  onDelteChange();
+                                  reload();
                                 }).catchError((error) =>
                                         print('Delete failed: $error'));
                               },

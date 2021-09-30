@@ -116,11 +116,18 @@ class _ProjectScreenState extends State<ProjectScreen> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ProjectItem(
+                  reload: () {
+                    setState(() {
+                      print('object');
+                    });
+                  },
                   project: snapshot.data![index],
                   onDelteChange: () => setState(
                     () {
                       print('reload');
-                      setState(() {});
+                      setState(() {
+                        return _editProject(context);
+                      });
                     },
                   ),
                 );

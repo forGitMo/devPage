@@ -24,7 +24,7 @@ class NavDrawer extends StatelessWidget {
             child: DrawerHeader(
               padding: EdgeInsets.zero,
               child: Image.asset(
-                'lib/assets/images/project_manager.jpg',
+                'lib/assets/images/image.jpg',
                 fit: BoxFit.cover,
               ),
             ),
