@@ -1,7 +1,9 @@
+import 'package:devpagemoritz/models/project.dart';
 import 'package:devpagemoritz/models/user.dart';
 import 'package:devpagemoritz/pages/Datenschutz_screen.dart';
 import 'package:devpagemoritz/pages/about_screen.dart';
 import 'package:devpagemoritz/pages/contact_screen.dart';
+import 'package:devpagemoritz/pages/edit_screen.dart';
 import 'package:devpagemoritz/pages/impressum_screen.dart';
 import 'package:devpagemoritz/pages/login_screen.dart';
 import 'package:devpagemoritz/pages/register_screen.dart';
@@ -40,6 +42,15 @@ class MyApp extends StatelessWidget {
           '/': (context) => Wrapper(),
           '/RegisterScreen': (context) => Register(),
           '/PojectScreen': (context) => ProjectScreen(),
+          '/EditScreen': (context) => EditScreen(
+                project: Project(
+                  description: '',
+                  id: '',
+                  imgUrl: '',
+                  projectUrl: '',
+                  title: '',
+                ),
+              ),
           ContactScreen.routeName: (context) => const ContactScreen(),
           AboutScreen.routeName: (context) => const AboutScreen(),
           ImpressumScreen.routeName: (context) => const ImpressumScreen(),

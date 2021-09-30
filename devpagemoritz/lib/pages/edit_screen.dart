@@ -1,27 +1,41 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:devpagemoritz/models/project.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class EditScreen extends StatelessWidget {
+class EditScreen extends StatefulWidget {
   EditScreen({required this.project});
   final Project project;
 
+  @override
+  State<EditScreen> createState() => _EditScreenState();
+}
+
+class _EditScreenState extends State<EditScreen> {
   TextEditingController title = TextEditingController();
+
   TextEditingController description = TextEditingController();
+
   TextEditingController imgUrl = TextEditingController();
+
   TextEditingController projectUrl = TextEditingController();
 
   final firestore = FirebaseFirestore.instance;
+
   void _edit() async {
+    final projectId = widget.project.id;
     try {
-      firestore.collection('projects').doc('${project.id}').update({
+      firestore.collection('projects').doc(projectId).update(<String, dynamic>{
+        'id': widget.project.id,
         'title': title.text,
         'description': description.text,
         'imgUrl': imgUrl.text,
         'projectUrl': projectUrl.text,
-      });
-      print('documentSnapshot.data()');
+      }).then((_) => print('updated'));
     } catch (e) {
       print(e);
     }
@@ -45,12 +59,12 @@ class EditScreen extends StatelessWidget {
                 height: 20,
               ),
               const Text(
-                'Create new project',
+                'Edit ur project',
                 style: TextStyle(fontSize: 20),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: TextFormField(
                   controller: title,
                   decoration: const InputDecoration(
                     hintText: 'new title',
@@ -64,7 +78,7 @@ class EditScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: TextFormField(
                   controller: description,
                   decoration: const InputDecoration(
                     hintText: 'new description',
@@ -78,7 +92,7 @@ class EditScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: TextFormField(
                   controller: imgUrl,
                   decoration: const InputDecoration(
                     hintText: 'new imgUrl',
@@ -92,7 +106,7 @@ class EditScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: TextFormField(
                   controller: projectUrl,
                   decoration: const InputDecoration(
                     hintText: 'new projectUrl',

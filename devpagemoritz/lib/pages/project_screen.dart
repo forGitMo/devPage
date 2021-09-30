@@ -120,9 +120,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                   onDelteChange: () => setState(
                     () {
                       print('reload');
-                      setState(() {
-                        return _editProject(context);
-                      });
+                      setState(() {});
                     },
                   ),
                 );
