@@ -2,19 +2,16 @@ import 'package:devpagemoritz/controller/project_controller.dart';
 import 'package:devpagemoritz/models/project.dart';
 import 'package:devpagemoritz/pages/edit_screen.dart';
 import 'package:devpagemoritz/pages/input_screen.dart';
-import 'package:devpagemoritz/pages/login_screen.dart';
+
 import 'package:devpagemoritz/services/auth.dart';
-import 'package:devpagemoritz/widgets/wrapper.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import '../widgets/project_item.dart';
 import '../widgets/nav_drawer.dart';
 
 class ProjectScreen extends StatefulWidget {
   static const routeName = '/projectDeatils-screen';
-  ProjectScreen({
-    Key? key,
-  }) : super(key: key);
+  ProjectScreen();
 
   @override
   State<ProjectScreen> createState() => _ProjectScreenState();

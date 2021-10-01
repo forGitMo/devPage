@@ -12,7 +12,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<MyUsers?>(context);
     if (user == null) {
-      return LoginScreen();
+      return const LoginScreen();
     } else {
       return ProjectScreen();
     }

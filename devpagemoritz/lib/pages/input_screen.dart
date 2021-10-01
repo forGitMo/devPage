@@ -56,12 +56,13 @@ class _InputScreenState extends State<InputScreen> {
   firebase_storage.Reference ref =
       firebase_storage.FirebaseStorage.instance.ref().child('images');
 
+  var time = DateTime.now();
   Future<void> uploadFile(String filePath) async {
     File file = File(filePath);
 
     try {
       await firebase_storage.FirebaseStorage.instance
-          .ref('images/img.png')
+          .ref('images/img' + '$time')
           .putFile(file);
     } on FirebaseException catch (e) {
       print(e);
@@ -72,20 +73,36 @@ class _InputScreenState extends State<InputScreen> {
 
   TextEditingController description = TextEditingController();
 
-  TextEditingController imgUrl = TextEditingController();
-
   TextEditingController projectUrl = TextEditingController();
 
   final firebase = FirebaseFirestore.instance;
+  late final VoidCallback callback;
+  var URL;
+  //dowload from storage
+  downloadStorage() async {
+    await firebase_storage.FirebaseStorage.instance
+        .ref('images/img' + '$time')
+        .getDownloadURL()
+        .then((url) {
+      this.URL = url;
+      print('Storage url:' + URL);
+    });
+  }
+
+  //create projects
   createData() async {
     try {
-      var imagePath = image;
-      await firebase.collection('projects').doc().set({
-        'title': title.text,
-        'description': description.text,
-        'imgUrl': imagePath,
-        'projectUrl': projectUrl.text
+      var headline = title.text;
+      String subheadline = description.text;
+      String ProjectUrl = projectUrl.text;
+      await downloadStorage();
+      firebase.collection('projects').doc().set({
+        'title': headline,
+        'description': subheadline,
+        'imgUrl': URL!.toString(),
+        'projectUrl': ProjectUrl,
       });
+      callback;
     } catch (e) {
       print(e);
     }
@@ -148,6 +165,23 @@ class _InputScreenState extends State<InputScreen> {
                     ),
                   ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: projectUrl,
+                  decoration: const InputDecoration(
+                    hintText: 'projectUrl',
+                    hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
+                    prefixIcon: Icon(
+                      Icons.folder_open_outlined,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -227,26 +261,14 @@ class _InputScreenState extends State<InputScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: projectUrl,
-                  decoration: const InputDecoration(
-                    hintText: 'projectUrl',
-                    hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
-                    prefixIcon: Icon(
-                      Icons.folder_open_outlined,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ),
+              SizedBox(
+                height: 20,
               ),
               ElevatedButton(
                 onPressed: () {
                   createData();
                   title.clear();
                   description.clear();
-                  imgUrl.clear();
                   projectUrl.clear();
                   Navigator.of(context).pushNamed('/', arguments: {});
                 },

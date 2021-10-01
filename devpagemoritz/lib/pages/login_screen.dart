@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devpagemoritz/pages/project_screen.dart';
+import 'package:devpagemoritz/pages/register_screen.dart';
 import 'package:devpagemoritz/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,7 +14,26 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation _animation;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final _animationController = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    _animationController.repeat(reverse: true);
+    _animation = Tween(begin: 2.0, end: 15.0).animate(_animationController)
+      ..addListener(() {
+        setState(() {});
+      });
+    super.initState();
+  }
+
+  @override
   final AuthService _auth = AuthService();
 
   showWarningtDialog(BuildContext context) {
@@ -88,6 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   var err = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,15 +124,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 160,
                   ),
+                  Container(
+                    width: 100,
+                    height: 100,
+                    child: CircleAvatar(
+                        backgroundImage:
+                            AssetImage('lib/assets/images/logo.png')),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.deepPurpleAccent,
+                              blurRadius: _animation.value,
+                              spreadRadius: _animation.value),
+                        ]),
+                  ),
                   const Padding(
                     padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Login',
-                      style: TextStyle(fontSize: 40),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                            fontSize: 35,
+                            letterSpacing: 1.5,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 5,
                   ),
                   TextFormField(
                     controller: email,
@@ -176,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               Icon(
                                 Icons.supervised_user_circle,
-                                color: Colors.black,
+                                color: Colors.deepPurpleAccent,
                               )
                             ],
                           )),
@@ -211,7 +254,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Row(
                             children: const [
                               Text('login'),
-                              Icon(Icons.login),
+                              Icon(
+                                Icons.login,
+                                color: Colors.black87,
+                              ),
                             ],
                           ),
                         ),
@@ -231,8 +277,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Row(
                             children: const [
-                              Text('login anon'),
-                              Icon(Icons.follow_the_signs_outlined),
+                              Text(
+                                'login anon',
+                                style: TextStyle(color: Colors.black26),
+                              ),
+                              Icon(
+                                Icons.follow_the_signs_outlined,
+                                color: Colors.black26,
+                              ),
                             ],
                           ),
                         ),

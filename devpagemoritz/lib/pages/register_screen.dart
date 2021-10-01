@@ -10,10 +10,10 @@ class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
 
   @override
-  _nameState createState() => _nameState();
+  _Register createState() => _Register();
 }
 
-class _nameState extends State<Register> {
+class _Register extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   var err = '';
