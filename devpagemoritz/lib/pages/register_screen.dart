@@ -1,13 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:devpagemoritz/pages/login_screen.dart';
-import 'package:devpagemoritz/pages/project_screen.dart';
-import 'package:devpagemoritz/widgets/wrapper.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:devpagemoritz/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
-  Register({Key? key}) : super(key: key);
+  const Register({Key? key}) : super(key: key);
 
   @override
   _Register createState() => _Register();
@@ -41,17 +37,12 @@ class _Register extends State<Register> {
                     style: TextStyle(fontSize: 40),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 TextFormField(
                   controller: email,
                   validator: (val) => val!.isEmpty ? 'Enter an Email' : null,
-                  onChanged: (val) {
-                    setState(() {
-                      email.text = val;
-                    });
-                  },
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     hintText: 'Email',
@@ -66,7 +57,7 @@ class _Register extends State<Register> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     err,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.red,
                       fontWeight: FontWeight.w600,
                     ),
@@ -78,11 +69,6 @@ class _Register extends State<Register> {
                   controller: password,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
-                  onChanged: (val) {
-                    setState(() {
-                      password.text = val;
-                    });
-                  },
                   decoration: const InputDecoration(
                     hintText: 'Password',
                     hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -98,8 +84,8 @@ class _Register extends State<Register> {
                     TextButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          print(email.text);
-                          print(password.text);
+                          debugPrint(email.text);
+                          debugPrint(password.text);
 
                           dynamic result =
                               await _auth.registerWhithEmailAndPassword(
