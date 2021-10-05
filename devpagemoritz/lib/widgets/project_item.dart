@@ -26,7 +26,7 @@ class ProjectItem extends StatelessWidget {
   void launchURL() async => await canLaunch(project.projectUrl)
       ? await launch(project.projectUrl)
       : throw 'Could not launch url';
-
+  int value = 1;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -94,75 +94,110 @@ class ProjectItem extends StatelessWidget {
                         onPressed: launchURL,
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Row(
-                        children: [
-                          Container(
-                            child: InkWell(
-                              onTap: () {
-                                FirebaseFirestore.instance
-                                    .doc(
-                                        'projects/${project.id}') // <-- Doc ID to be deleted.
-                                    .delete() // <-- Delete
-                                    .then((_) {
-                                  print('Deleted');
-                                  //
-                                  reload();
-                                }).catchError((error) =>
-                                        print('Delete failed: $error'));
-                              },
-                              child: Card(
-                                color: Color.fromRGBO(255, 0, 0, 0.6),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.delete_forever_rounded,
-                                        color: Colors.white,
-                                        size: 17,
-                                      ),
-                                      Text(
-                                        'delete',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8.0),
                               ),
+                              color: Colors.black45),
+                          child: DropdownButton<int>(
+                            disabledHint: Text('disable'),
+                            iconDisabledColor: Colors.black12,
+                            icon: Icon(Icons.settings),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
                             ),
-                          ),
-                          Container(
-                            child: InkWell(
-                              onTap: () {
-                                print('edit');
-                                onDelteChange();
-                              },
-                              child: Card(
-                                color: Color.fromRGBO(0, 0, 255, 0.6),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.edit,
-                                        color: Colors.white,
-                                        size: 17,
+                            dropdownColor: Colors.black38,
+                            items: [
+                              DropdownMenuItem(
+                                value: 1,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: InkWell(
+                                        onTap: () {
+                                          FirebaseFirestore.instance
+                                              .doc(
+                                                  'projects/${project.id}') // <-- Doc ID to be deleted.
+                                              .delete() // <-- Delete
+                                              .then((_) {
+                                            print('Deleted');
+                                            //
+                                            reload();
+                                          }).catchError((error) => print(
+                                                  'Delete failed: $error'));
+                                        },
+                                        child: Card(
+                                          color: Color.fromRGBO(255, 0, 0, 0.6),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: const [
+                                                Icon(
+                                                  Icons.delete_forever_rounded,
+                                                  color: Colors.white,
+                                                  size: 17,
+                                                ),
+                                                Text(
+                                                  'delete',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      Text(
-                                        'edit',
-                                        style: TextStyle(color: Colors.white),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 2,
+                                      child: Container(
+                                        child: InkWell(
+                                          onTap: () {
+                                            print('edit');
+                                            onDelteChange();
+                                          },
+                                          child: Card(
+                                            color:
+                                                Color.fromRGBO(0, 0, 255, 0.6),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: const [
+                                                  Icon(
+                                                    Icons.edit,
+                                                    color: Colors.white,
+                                                    size: 17,
+                                                  ),
+                                                  Text(
+                                                    'edit',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
-                              ),
-                            ),
+                              )
+                            ],
+                            onChanged: (val) {
+                              value = val!;
+                            },
                           ),
-                        ],
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

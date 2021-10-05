@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen>
       ..addListener(() {
         setState(() {});
       });
+    _animationController.forward();
     super.initState();
   }
 
@@ -108,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   var err = '';
-
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,94 +202,93 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                          onPressed: () async {
-                            Navigator.of(context)
-                                .pushReplacementNamed('/RegisterScreen');
-                            email.clear();
-                            password.clear();
-                          },
-                          child: Row(
-                            children: const [
-                              Text(
-                                'register',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              Icon(
-                                Icons.supervised_user_circle,
-                                color: Colors.deepPurpleAccent,
-                              )
-                            ],
-                          )),
-                      const SizedBox(
-                        width: 10,
+                  Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    InkWell(
+                      onTap: () async {
+                        dynamic result = await _auth.signInAnon();
+                        if (result == null) {
+                          print('error to signing in');
+                        } else {
+                          print('signing in.. ');
+                          print(result.uid);
+                          Navigator.of(context).pushReplacementNamed('/');
+                        }
+                      },
+                      child: Row(
+                        children: const [
+                          Text(
+                            'login anon',
+                            style: TextStyle(color: Colors.black26),
+                          ),
+                          Icon(
+                            Icons.follow_the_signs_outlined,
+                            color: Colors.black26,
+                          ),
+                        ],
                       ),
-                      Row(children: [
-                        InkWell(
-                          onTap: () async {
-                            if (_formKey.currentState!.validate()) {
-                              dynamic result =
-                                  await _auth.signInWhithEmailAndPassword(
-                                      email.text, password.text);
-                              if (result == null) {
-                                setState(() {
-                                  err =
-                                      'Could not sign in with those cedentials';
-                                  email.clear();
-                                  password.clear();
-                                });
-                              } else {
-                                Navigator.of(context).pushReplacementNamed('/');
-                                err = '';
+                    ),
+                  ]),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            dynamic result =
+                                await _auth.signInWhithEmailAndPassword(
+                                    email.text, password.text);
+                            if (result == null) {
+                              setState(() {
+                                err = 'Could not sign in with those cedentials';
                                 email.clear();
                                 password.clear();
-                              }
-
+                              });
+                            } else {
+                              Navigator.of(context).pushReplacementNamed('/');
+                              err = '';
                               email.clear();
                               password.clear();
                             }
-                          },
-                          child: Row(
-                            children: const [
-                              Text('login'),
-                              Icon(
-                                Icons.login,
-                                color: Colors.black87,
-                              ),
-                            ],
-                          ),
+
+                            email.clear();
+                            password.clear();
+                          }
+                        },
+                        child: Row(
+                          children: const [
+                            Text('login'),
+                            Icon(
+                              Icons.login,
+                              color: Colors.black87,
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          width: 10,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.of(context)
+                              .pushReplacementNamed('/RegisterScreen');
+                          email.clear();
+                          password.clear();
+                        },
+                        child: Row(
+                          children: const [
+                            Text(
+                              'register',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            Icon(
+                              Icons.supervised_user_circle,
+                              color: Colors.deepPurpleAccent,
+                            )
+                          ],
                         ),
-                        InkWell(
-                          onTap: () async {
-                            dynamic result = await _auth.signInAnon();
-                            if (result == null) {
-                              print('error to signing in');
-                            } else {
-                              print('signing in.. ');
-                              print(result.uid);
-                              Navigator.of(context).pushReplacementNamed('/');
-                            }
-                          },
-                          child: Row(
-                            children: const [
-                              Text(
-                                'login anon',
-                                style: TextStyle(color: Colors.black26),
-                              ),
-                              Icon(
-                                Icons.follow_the_signs_outlined,
-                                color: Colors.black26,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ]),
+                      ),
                     ],
                   ),
                 ],

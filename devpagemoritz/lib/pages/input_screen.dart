@@ -270,6 +270,7 @@ class _InputScreenState extends State<InputScreen> {
                   title.clear();
                   description.clear();
                   projectUrl.clear();
+                  callback();
                   Navigator.of(context).pushNamed('/', arguments: {});
                 },
                 child: const Text(
