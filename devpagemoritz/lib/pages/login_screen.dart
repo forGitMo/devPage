@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devpagemoritz/pages/project_screen.dart';
-import 'package:devpagemoritz/pages/register_screen.dart';
 import 'package:devpagemoritz/services/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,8 +15,9 @@ class _LoginScreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation _animation;
+
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     final _animationController = AnimationController(
       duration: const Duration(seconds: 2),
@@ -40,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen>
   showWarningtDialog(BuildContext context) {
     // set up the button
     Widget okButton = InkWell(
-      child: Text("OK"),
+      child: const Text("OK"),
       onTap: () {
         Navigator.of(context).pop(LoginScreen);
       },
@@ -48,8 +46,8 @@ class _LoginScreenState extends State<LoginScreen>
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Warning"),
-      content: Text("username or password is not correct!"),
+      title: const Text("Warning"),
+      content: const Text("username or password is not correct!"),
       actions: [
         okButton,
       ],
@@ -159,14 +157,8 @@ class _LoginScreenState extends State<LoginScreen>
                   ),
                   TextFormField(
                     controller: email,
-                    textDirection: TextDirection.ltr,
                     keyboardType: TextInputType.emailAddress,
                     validator: (val) => val!.isEmpty ? 'Enter an Email' : null,
-                    onChanged: (val) {
-                      setState(() {
-                        email.text = val;
-                      });
-                    },
                     decoration: const InputDecoration(
                       hintText: 'Email',
                       hintStyle: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -189,7 +181,6 @@ class _LoginScreenState extends State<LoginScreen>
                     validator: (val) =>
                         val!.length <= 6 ? 'Enter an password >= 6' : null,
                     obscureText: true,
-                    textDirection: TextDirection.ltr,
                     onChanged: (val) {
                       password.text = val;
                     },
